@@ -4,7 +4,7 @@ import pandas as pd
 # Connects to an existing database file in the current directory
 # If the file does not exist, it creates it in the current directory
 
-db_connect = sqlite3.connect('project_part3.db')
+db_connect = sqlite3.connect('project.db')
 
 # Instantiate cursor object for executing queries
 cursor = db_connect.cursor()
@@ -50,8 +50,11 @@ def createTables():
             sPosition varchar(255),
             sSalary int check (sSalary between 0 and 9999999),
             clinicNo int check (clinicNo between 0 and 9999),
+            clinicManaged int check (clinicManaged between 0 and 9999),
             CONSTRAINT fk_staff
                 FOREIGN KEY (clinicNo) REFERENCES Clinic(clinicNo)
+                ON DELETE SET NULL
+                FOREIGN KEY (clinicManaged) REFERENCES Clinic(clinicNo)
                 ON DELETE SET NULL
         );
     """
@@ -136,27 +139,27 @@ def insertRows():
     cursor.execute(query)
 
     query = """
-        INSERT INTO Staff VALUES (0001, 'Alan Brown', '100 Coral Street', 7868530006, '1980-12-10', 'Secretary', 60000, 0001);
+        INSERT INTO Staff VALUES (0001, 'Alan Brown', '100 Coral Street', 7868530006, '1980-12-10', 'Secretary', 60000, 0001, 0001);
     """
     cursor.execute(query)
 
     query = """
-        INSERT INTO Staff VALUES (0002, 'Anna Black', '320 West Boulevard', 7868530007, '1985-10-05', 'Assistant', 70000, 0002);
+        INSERT INTO Staff VALUES (0002, 'Anna Black', '320 West Boulevard', 7868530007, '1985-10-05', 'Assistant', 70000, 0002, NULL);
     """
     cursor.execute(query)
 
     query = """
-        INSERT INTO Staff VALUES (0003, 'Sam White', '450 North Avenue', 7868530008, '1970-02-07', 'Veterinary', 100000, 0003);
+        INSERT INTO Staff VALUES (0003, 'Sam White', '450 North Avenue', 7868530008, '1970-02-07', 'Veterinary', 100000, 0003, NULL);
     """
     cursor.execute(query)
 
     query = """
-        INSERT INTO Staff VALUES (0004, 'Luisa Red', '300 South Avenue', 7868530009, '1989-11-03', 'Assisant', 75000, 0004);
+        INSERT INTO Staff VALUES (0004, 'Luisa Red', '300 South Avenue', 7868530009, '1989-11-03', 'Assisant', 75000, 0004, NULL);
     """
     cursor.execute(query)
 
     query = """
-        INSERT INTO Staff VALUES (0005, 'Max Gray', '201 Ocean Street', 7868530010, '1964-03-11', 'Veterinary', 120000, 0005);
+        INSERT INTO Staff VALUES (0005, 'Max Gray', '201 Ocean Street', 7868530010, '1964-03-11', 'Veterinary', 120000, 0005, 0005);
     """
     cursor.execute(query)
 
